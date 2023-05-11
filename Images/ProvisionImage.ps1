@@ -1,27 +1,29 @@
-identityname="testidentity"
-rg="testavd"
-location="westeurope"
-galleryname="myGallery"
-imageDefinitionName="myImageDef"
-osType="Windows"
-offer="offer"
-publisher="publisher"
-sku="sku"
-imageSource="MicrosoftWindowsDesktop:Windows-10:20h2-evd-g2:19042.2965.230505"
-imageTemplate="myTemplate"
 
+#Create the Managed Identity to use with Image Template
 identity=$(az identity create -n $identityname -g $rg -l $location)
+#Create the Azure Compute Gallery
 gallery=$(az sig create --resource-group $rg --gallery-name $galleryname)
+#Pick the Gallery ID
 galleryID=$(echo $gallery| grep -o '"id": *"[^"]*"' | grep -o '"[^"]*"$')
+galleryID=${galleryID//\"/}
+#Pick the PrincipalID for the Managed Identity
 principalid=$(echo $identity | grep -o '"principalId": *"[^"]*"' | grep -o '"[^"]*"$')
 principalid=${principalid//\"/}
-galleryID=${galleryID//\"/}
-#az role assignment create --assignee $principalid --role "Image Template Contributor" --scope $galleryID
+
+#Assign the contributor role the the RG, I would suggest to keep all the image in a separated Resource Group
 az role assignment create --assignee $principalid --role "Contributor" --resource-group $rg
+# Create the Image Definition in the Gallery that is used to group the Image versions
 az sig image-definition create --gallery-name $galleryname --os-type $osType -g $rg -p $publisher -f $offer -s $sku -i $imageDefinitionName --architecture x64 --hyper-v-generation V2 --os-state Generalized 
+#The follow command store the change in a cache, then last command will upload all the changes from the share in Azure
+#Create the Image Builder Template with definition of the source and destination image
 az image builder create -n $imageTemplate -g $rg --identity $identityname --image-source $imageSource --shared-image-destinations $galleryname/$imageDefinitionName=$location --defer
+#Add a customizer task where execute a simple powershell command to create a folder
 az image builder customizer add -n $imageTemplate -g $rg --customizer-name myPwshScript --exit-codes 0 1 --inline-script "mkdir c:\buildActions" "echo Azure-Image-Builder-Was-Here \> c:\buildActions\Output.txt" --type powershell --defer
-az image builder customizer add -n $imageTemplate -g $rg --customizer-name winUpdate --type windows-update --search-criteria IsInstalled=0 --filters "exclude:\$_.Title -like \'*Preview*\'" "include:\$true" --update-limit 20 --defer
+#Add a customizer task where run windows update
+az image builder customizer add -n $imageTemplate -g $rg --customizer-name winUpdate --type windows-update --search-criteria IsInstalled=0 --update-limit 20 --defer
+#Add a customizer task where restart the VM
 az image builder customizer add -n $imageTemplate -g $rg --customizer-name restart --type windows-restart --restart-timeout 10m --defer
+#Update the Image Builder Template uploading the previous change from cache to Azure
 az image builder update -n $imageTemplate -g $rg
+#Start the Imabe Builder Pipeline to create the image, this task can take long time to complete
 az image builder run -n $imageTemplate -g $rg --no-wait
