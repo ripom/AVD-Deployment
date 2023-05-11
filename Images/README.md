@@ -4,7 +4,7 @@ This script is pretty easy, before run the script is necessary to assign the var
 ```
 * identityname=<Name of the Identity used by the Image Builder Template: testidentity>  
 * rg=<Name of the resource group, this should be already created>  
-* location=<Location where create the resource: westeurope\  
+* location=<Location where create the resource: westeurope>  
 * galleryname=<gallery name: myGallery>  
 * imageDefinitionName=<Image Definition Name: myImageDef>  
 * osType=<Specify which OS is base the Image: Windows>  
