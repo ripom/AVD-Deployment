@@ -1,9 +1,16 @@
 # AVD-Deployment
 
 This repository contains a sample AVD HostPool and HostSession deployment using BICEP script.
+The script use Windows 11 Market Place Image, you can change the image in the script.
 This is a draft and it's still in development but it can be used as first step to deploy your first HostPoll using IaC.
+  
 
-Yo use this template you can run this command and replace with your parameters:  
+The pre-requisite for this template you need:  
+*to create a Resource Group
+*Contributor permission on the RG
+*Contributor permission on the VNET you are using to deploy the Session Host to  
+
+To use this template you can run this command and replace with your parameters:  
 az deployment group create --name test -g nordics --template-file main.bicep  --parameters \\  
     location=<location: westeurope> \\  
     subnetID=<subnet ID that you can copy from the Azure Portal> \\  
