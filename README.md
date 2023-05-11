@@ -5,9 +5,9 @@ This is a draft and it's still in development but it can be used as first step t
 
 Yo use this template you can run this command and replace with your parameters:  
 az deployment group create --name test -g nordics --template-file main.bicep  --parameters \\
-      location=<location: westeurope> \\
-      subnetID=<subnet ID that you can copy from the Azure Portal> \\
-      vmPrefix=<vm prefix> \\
+      location=<location: westeurope> \\  
+      subnetID=<subnet ID that you can copy from the Azure Portal> \\  
+      vmPrefix=<vm prefix> \\  
       AVDnumberOfInstances=<this is an integer and it is the number of the host session you want create> \\
       vmSize=<vm size SKU: Standard_DS2_v2> \\
       administratorAccountUserName=<local username> \\
