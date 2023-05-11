@@ -2,7 +2,7 @@
 
 This script is pretty easy, before run the script is necessary to assign the variables:  
 #declare variables  
-hostpoolname=<host pool name>  
+hostpoolname=\<host pool name\>  
 resourcegroup=<resource group name>  
 location=<location>  
 appGroupName=Application Group Name: Desktop-AG>  
