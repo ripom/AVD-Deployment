@@ -4,11 +4,11 @@ This BICEP repository contains a sample AVD HostPool and HostSession deployment 
 The script use Windows 11 Market Place Image, you can change the image in the script.
 This is a draft and it's still in development but it can be used as first step to deploy your first HostPoll using IaC.
   
-
+```
 The pre-requisite for this template you need:  
-1- to create a Resource Group  
-2- to assign Contributor permission on the RG  
-3- to assign Contributor permission on the VNET you are using to deploy the Session Host to  
+* to create a Resource Group  
+* to assign Contributor permission on the RG  
+* to assign Contributor permission on the VNET you are using to deploy the Session Host to  
 
 To use this template you can run this command and replace with your parameters:  
 az deployment group create --name test -g nordics --template-file main.bicep  --parameters \\  
@@ -25,4 +25,4 @@ az deployment group create --name test -g nordics --template-file main.bicep  --
     tokenExpirationTime=$(date -d '+24 hours' --iso-8601=seconds) \\  
     appGroupFriendlyName=\<Application Group name: AppGroup-DAG\> \\  
     workspaceName=\<Workspace Name: TestWorkspace\>
-  
+```
