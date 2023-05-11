@@ -6,9 +6,9 @@ This is a draft and it's still in development but it can be used as first step t
   
 
 The pre-requisite for this template you need:  
-*to create a Resource Group
-*Contributor permission on the RG
-*Contributor permission on the VNET you are using to deploy the Session Host to  
+1- to create a Resource Group  
+2-Contributor permission on the RG  
+3-Contributor permission on the VNET you are using to deploy the Session Host to  
 
 To use this template you can run this command and replace with your parameters:  
 az deployment group create --name test -g nordics --template-file main.bicep  --parameters \\  
