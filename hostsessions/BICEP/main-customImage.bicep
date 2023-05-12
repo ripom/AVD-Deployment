@@ -37,9 +37,9 @@ param administratorAccountUserName string
 param administratorAccountPassword string
 param subnetID string
 param vmPrefix string
-param publisher string
-param offer string
-param sku string
+param rgSIG string
+param SIGname string
+param ImageDefName string
 param ImageVersion string
 //End Parameters Section
 
@@ -61,7 +61,7 @@ module hostpool 'hostpool.bicep' = {
 }
 
 //Invoke the module to create the HostSession in the HostPool
-module VMs './vm-sessionhosts.bicep' = {
+module VMs './vm-sessionhosts-customImage.bicep' = {
   name: 'VMs-${deployment().name}'
   params: {
     location: location
@@ -73,10 +73,10 @@ module VMs './vm-sessionhosts.bicep' = {
     AVDnumberOfInstances: AVDnumberOfInstances
     subnetID: subnetID
     registrationToken: hostpool.outputs.tokenvalue
-    publisher: publisher
-    offer: offer
-    sku: sku
-    ImageVersion: ImageVersion
+    rgSIG: rgSIG
+    SIGname: SIGname
+    ImageDefName: ImageDefName
+    ImageVersion: ImageVersion 
   }
   dependsOn: [
     hostpool

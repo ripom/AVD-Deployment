@@ -1,10 +1,10 @@
 
 #Create HostPool - Personakl Automatic  
-az desktopvirtualization hostpool create --name $hostpoolname--resource-group $resourcegroup--host-pool-type Personal --load-balancer-type Persistent --preferred-app-group-type Desktop --personal-desktop-assignment-type Automatic --location $location  
+az desktopvirtualization hostpool create --name $hostpoolname --resource-group $resourcegroup --host-pool-type Personal --load-balancer-type Persistent --preferred-app-group-type Desktop --personal-desktop-assignment-type Automatic --location $location  
   
 #Create Desktop Application Group  
-hostPoolArmPath=$(az desktopvirtualization hostpool show  --name $hostpoolname--resource-group $resourcegroup--query [id] --output tsv)  
-az desktopvirtualization applicationgroup create --name $appGroupName --resource-group $resourcegroup--application-group-type Desktop --host-pool-arm-path $hostPoolArmPath --location $location  
+hostPoolArmPath=$(az desktopvirtualization hostpool show  --name $hostpoolname--resource-group $resourcegroup --query [id] --output tsv)  
+az desktopvirtualization applicationgroup create --name $appGroupName --resource-group $resourcegroup --application-group-type Desktop --host-pool-arm-path $hostPoolArmPath --location $location  
   
 #Generate the registration Token that last 1 day  
 az desktopvirtualization hostpool update  --name $hostpoolname --resource-group $resourcegroup --registration-info expiration-time=$(date -d '+24 hours' --iso-8601=seconds) registration-token-operation="Update"  
