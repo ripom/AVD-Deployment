@@ -29,7 +29,7 @@ vmsizeAIB=<VM Size using during the image builder: Standard_D16_v5>
 imageversion=<1.0.4>
 ```  
 If you need to find the exact ImageSource you are looking for, you can use this command (that include a filder on Windows10):  
-az vm image list --offer Windows-10 --all --output table  
+***az vm image list --offer Windows-10 --all --output table***  
   
 To view the details for the specific Image use this command:  
-az vm image show --offer Windows-10 --publisher MicrosoftWindowsDesktop --sku win10-22h2-entn-g2 --version 19045.2846.230329 -l westeurope
+***az vm image show --offer Windows-10 --publisher MicrosoftWindowsDesktop --sku win10-22h2-entn-g2 --version 19045.2846.230329 -l westeurope***
