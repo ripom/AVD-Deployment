@@ -24,7 +24,7 @@ offer=<Choose the name of the offer I want assign in my Gallery: myoffer>
 publisher=<Choose the name of the publisher I want assign in my Gallery: mypublisher>  
 sku=<Choose the name of the SKU I want assign in my Gallery: mysku>  
 imageSource=<Specify the Image Source: MicrosoftWindowsDesktop:Windows-10:20h2-evd-g2:19042.2965.230505>  
-imageTemplate=<Specify the name of the Image Template: win10-ver-1.0.0>
+imageTemplate=<Choose the name of the Image Template (will add automatically the version in the name): win10>
 vmsizeAIB=<VM Size using during the image builder: Standard_D16_v5>
 imageversion=<1.0.4>
 ```  
