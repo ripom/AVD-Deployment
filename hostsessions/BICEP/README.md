@@ -3,6 +3,7 @@
 This BICEP repository contains a sample AVD HostPool and HostSession deployment using BICEP script.  
 The script has a main file that call 2 modules one to create the hostpool and another one to create the host sessions.  
 Based on the parameter imageType (that can have one of those values: "Marketplace" or "Gallery"), you can deploy VMs based on a Marketplace Image or a Custom Image.
+```
 If you are using Marketplace, then you shoud also use those parameters:  
     publisher=<Specify the Publisher: MicrosoftWindowsDesktop>  
     offer=<Speficy the Offer: Windows-11>  
@@ -15,7 +16,8 @@ If you are using Gallery, then you shoud also use those parameters:
     ImageDefName=<Specify the Image Definition Name: myImageDef>  
     ImageVersion=<Specify the Image Version: latest>  
     imageType="Gallery"  
-  
+```
+
 ```
 The pre-requisite you need for this script:  
 * create a Resource Group  
