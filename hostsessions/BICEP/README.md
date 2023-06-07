@@ -1,9 +1,20 @@
 # Deploy HostPool and Host Sessions using BICEP
 
 This BICEP repository contains a sample AVD HostPool and HostSession deployment using BICEP script.  
-The script has a main file that call 2 modules one to create the hostpool and another one to create the vost sessions.  
-In this specific case you have 2 different BICEP main files, 2 different BICEP vm-sessionshost files and one BICEP hostpool file, this is to have the option to deploy Host Session using Marketplace Images or using Azure Compute Gallery based Images.
+The script has a main file that call 2 modules one to create the hostpool and another one to create the host sessions.  
+Based on the parameter imageType (that can have one of those values: "Marketplace" or "Gallery"), you can deploy VMs based on a Marketplace Image or a Custom Image.
+If you are using Marketplace, then you shoud also use those parameters:  
+    publisher=<Specify the Publisher: MicrosoftWindowsDesktop>  
+    offer=<Speficy the Offer: Windows-11>  
+    sku=<Specify the SKU: win11-22h2-entn>  
+    ImageVersion=<Specify the Image Version: latest>  
+    imageType="Marketplace"  
 
+If you are using Gallery, then you shoud also use those parameters:  
+    SIGname=<Specify the name of the Azure Compute Gallery: myGallery>  
+    ImageDefName=<Specify the Image Definition Name: myImageDef>  
+    ImageVersion=<Specify the Image Version: latest>  
+    imageType="Gallery"  
   
 ```
 The pre-requisite you need for this script:  
@@ -32,7 +43,8 @@ az deployment group create --name <specify the name of the deployment> -g <Speci
     publisher=<Specify the Publisher: MicrosoftWindowsDesktop> \
     offer=<Speficy the Offer: Windows-11> \
     sku=<Specify the SKU: win11-22h2-entn> \
-    ImageVersion=<Specify the Image Version: latest>
+    ImageVersion=<Specify the Image Version: latest> \
+    imageType="Marketplace"
 ```
   
 
@@ -40,7 +52,7 @@ az deployment group create --name <specify the name of the deployment> -g <Speci
 ```
 To use this template you can run this command and replace with your parameters:  
 az deployment group create --name <specify the name of the deployment> -g <Specify the name of the ResourceGroup created in the prerequisite> \
-    --template-file main-customImage.bicep  --parameters \  
+    --template-file main.bicep  --parameters \  
     location=<location: westeurope> \  
     subnetID=<subnet ID that you can copy from the Azure Portal> \  
     vmPrefix=<vm prefix> \  
@@ -57,5 +69,6 @@ az deployment group create --name <specify the name of the deployment> -g <Speci
     rgSIG=<Specify the name of the ResourceGroup where the Azure Compute Gallery has been deployed: testavd> \
     SIGname=<Specify the name of the Azure Compute Gallery: myGallery> \
     ImageDefName=<Specify the Image Definition Name: myImageDef> \
-    ImageVersion=<Specify the Image Version: latest>
+    ImageVersion=<Specify the Image Version: latest> \
+    imageType="Gallery"
 ```

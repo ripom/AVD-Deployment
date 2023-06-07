@@ -37,11 +37,30 @@ param administratorAccountUserName string
 param administratorAccountPassword string
 param subnetID string
 param vmPrefix string
-param publisher string
-param offer string
-param sku string
-param ImageVersion string
+@allowed(['Marketplace','Gallery'])
+param imageType string
+
+param publisher string=''
+param offer string=''
+param sku string=''
+param ImageVersion string=''
+
+param rgSIG string=''
+param SIGname string=''
+param ImageDefName string=''
 //End Parameters Section
+
+var imageRefMap = {
+  Marketplace:{
+    publisher: publisher
+    offer: offer
+    sku: sku
+    version: ImageVersion //'22621.1555.230329'
+  }
+  Gallery:{
+    id: resourceId(rgSIG, 'Microsoft.Compute/galleries/images/versions', SIGname, ImageDefName, ImageVersion)
+  }
+} 
 
 // Invoke Module to create the HostPool and applicationgroup
 module hostpool 'hostpool.bicep' = {
@@ -73,10 +92,7 @@ module VMs './vm-sessionhosts.bicep' = {
     AVDnumberOfInstances: AVDnumberOfInstances
     subnetID: subnetID
     registrationToken: hostpool.outputs.tokenvalue
-    publisher: publisher
-    offer: offer
-    sku: sku
-    ImageVersion: ImageVersion
+    imageRef: imageRefMap[imageType]
   }
   dependsOn: [
     hostpool

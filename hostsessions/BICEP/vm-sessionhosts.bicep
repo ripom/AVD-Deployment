@@ -14,11 +14,7 @@ param administratorAccountPassword string
 param subnetID string
 param vmPrefix string
 param registrationToken string
-param publisher string
-param offer string
-param sku string
-param ImageVersion string
-//End Parameters Section
+param imageRef object
 
 //Create NICs based on the number of instances
 resource nic 'Microsoft.Network/networkInterfaces@2022-07-01' = [for i in range(0, AVDnumberOfInstances): {
@@ -71,14 +67,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = [for i in range(0, 
         osType: 'Windows'
         createOption: 'FromImage'
       }
-      imageReference: {
-        publisher: publisher
-        offer: offer
-        sku: sku
-        version: ImageVersion //'22621.1555.230329'
-        // You can provide your own Image from the Azure Compute Gallery removing but comment the last 4 previous line
-        //id: resourceId(sharedImageGalleryResourceGroup, 'Microsoft.Compute/galleries/images/versions', sharedImageGalleryName, sharedImageGalleryDefinitionname, sharedImageGalleryVersionName)
-      }
+      imageReference: imageRef
       dataDisks: []
     }
     networkProfile: {
